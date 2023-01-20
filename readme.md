@@ -1,0 +1,1 @@
+This project consists of a Proof Of Concept for me exercising the most recent studies in the TypeScript language. Here, I try to simulate a express application that will compute the matches of a Football Championship.
