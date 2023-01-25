@@ -1,16 +1,16 @@
 import { Team } from "../type/teamType"
 import { NextFunction, Request, Response } from "express";
-import { insertTeamsQuery, getTeamsQuery, deleteTeamsQuery } from "../repository/teamsRepository";
+import { insertTeamsQuery, getTeamsQuery, deleteTeamsQuery } from "../repositories/teamsRepository.js";
 
 export async function insertTeams(req:Request, res : Response) {
-    const team: Team = res.locals.team
-    
+    const team = req.body as Team
+
     try {
         await insertTeamsQuery(team)
-        res.sendStatus(201)
+        return res.sendStatus(201)
     } catch (error) {
         console.log(error)
-        res.sendStatus(400)
+        return res.sendStatus(400)
     }
 }
 
@@ -18,10 +18,10 @@ export async function getTeams(req:Request, res : Response) {
     
     try {
         const teams = await getTeamsQuery()
-        res.send(teams).status(200)
+        return res.send(teams.rows).status(202)
     } catch (error) {
         console.log(error)
-        res.sendStatus(400)
+        return res.sendStatus(400)
     }
 }
 
@@ -29,9 +29,9 @@ export async function deleteTeams(req:Request, res : Response) {
     const { id } = req.params
     try {
         await deleteTeamsQuery(id)
-        res.sendStatus(201)
+        return res.sendStatus(202)
     } catch (error) {
         console.log(error)
-        res.sendStatus(400)
+        return res.sendStatus(400)
     }
 }

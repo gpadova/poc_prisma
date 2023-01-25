@@ -1,10 +1,9 @@
-const Joi = require('joi')
-    .extend(require('@joi/date'));
+import Joi from "joi";
 
 export const matchSchema = Joi.object({
     homeTeamId: Joi.number().integer().positive().required(),
     awayTeamId: Joi.number().integer().positive().required(),
-    date: Joi.date().format('YYYY-MM-DD').utc()
+    date: Joi.date().required()
 })
 
 export const homeGoalSchema = Joi.object({

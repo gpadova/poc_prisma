@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { teamsSchema } from "../schemas/teamsSchema";
-import { Team } from "../type/teamType";
-import connectionDB from "../database/db";
+import { teamsSchema } from "../schemas/teamsSchema.js";
+import { Team } from "../type/teamType.js";
+import connectionDB from "../database/db.js";
 
 export async function teamsBodyValidation(req:Request, res : Response, next : NextFunction) {
     const team = req.body as Team
@@ -9,7 +9,7 @@ export async function teamsBodyValidation(req:Request, res : Response, next : Ne
     const  {error} = teamsSchema.validate(team, {abortEarly: false})
 
     if(error){
-        return res.status(400).send({
+        return res.status(404).send({
             message : error.message
         })
     }

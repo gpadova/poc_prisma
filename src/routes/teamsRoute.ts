@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { teamsBodyValidation, validateIdInTeamsDb } from "../middlewares/teamsMiddleware";
-import { insertTeams, getTeams, deleteTeams } from "../controllers/teamsController";
+import { teamsBodyValidation, validateIdInTeamsDb } from "../middlewares/teamsMiddleware.js";
+import { insertTeams, getTeams, deleteTeams } from "../controllers/teamsController.js";
 
 
 const teamsRouter = Router()

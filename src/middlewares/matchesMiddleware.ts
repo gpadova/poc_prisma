@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { string } from "joi";
-import connectionDB from "../database/db";
-import { matchSchema } from "../schemas/matchSchema";
-import { Match, HomeGoal, AwayGoal } from "../type/matchType";
+import connectionDB from "../database/db.js";
+import { matchSchema } from "../schemas/matchSchema.js";
+import { Match, HomeGoal, AwayGoal } from "../type/matchType.js";
 
 export async function matchBodyValidation(req:Request, res : Response, next : NextFunction) {
     const match = req.body as Match
@@ -52,7 +52,7 @@ export async function verifyIdInMatchesDb(req:Request, res : Response, next : Ne
         SELECT * FROM matches WHERE id = $1;
     `, [id])
     if(idExists.rowCount === 0){
-        res.sendStatus(404)
+        return res.sendStatus(404)
     }
     next()
 }

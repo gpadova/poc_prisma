@@ -1,11 +1,12 @@
 import express from "express"
-import teamsRouter from "./routes/teamsRoute"
-import matchesRouter from "./routes/matchesRoute"
+import teamsRouter from "./routes/teamsRoute.js"
+import matchesRouter from "./routes/matchesRoute.js"
 import cors from "cors"
 
 const app = express()
 
 app.use(cors())
+app.use(express.json())
 app.use(teamsRouter)
 app.use(matchesRouter)
 
