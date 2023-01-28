@@ -1,4 +1,4 @@
-import { Team } from "../type/teamType"
+import { Team } from "../type/teamType.js"
 import { NextFunction, Request, Response } from "express";
 import { insertTeamsQuery, getTeamsQuery, deleteTeamsQuery } from "../repositories/teamsRepository.js";
 
@@ -18,7 +18,7 @@ export async function getTeams(req:Request, res : Response) {
     
     try {
         const teams = await getTeamsQuery()
-        return res.send(teams.rows).status(202)
+        return res.send(teams).status(202)
     } catch (error) {
         console.log(error)
         return res.sendStatus(400)

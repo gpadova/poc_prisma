@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { string } from "joi";
-import connectionDB from "../database/db.js";
+import prisma from "../database/db.js";
 import { matchSchema } from "../schemas/matchSchema.js";
 import { Match, HomeGoal, AwayGoal } from "../type/matchType.js";
 
@@ -48,10 +48,12 @@ export async function awayGoalValidation(req:Request, res : Response, next : Nex
 export async function verifyIdInMatchesDb(req:Request, res : Response, next : NextFunction) {
     const id: string = req.params.id
     
-    const idExists = await connectionDB.query(`
-        SELECT * FROM matches WHERE id = $1;
-    `, [id])
-    if(idExists.rowCount === 0){
+    const idExists = await prisma.matches.findFirst({
+        where: {
+            "id": Number(id)
+        }
+    })
+    if(idExists === null){
         return res.sendStatus(404)
     }
     next()

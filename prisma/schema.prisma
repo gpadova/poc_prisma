@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model matches {
+  id                              Int      @id(map: "matches_pk") @default(autoincrement())
+  homeTeamId                      Int
+  awayTeamId                      Int
+  date                            DateTime @db.Date
+  homeGoals                       Int @default(0)
+  awayGoals                       Int @default(0)
+  teams_matches_homeTeamIdToteams teams    @relation("matches_homeTeamIdToteams", fields: [homeTeamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "matches_fk0")
+  teams_matches_awayTeamIdToteams teams    @relation("matches_awayTeamIdToteams", fields: [awayTeamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "matches_fk1")
+}
+
+model players {
+  id     Int    @id(map: "players_pk") @default(autoincrement())
+  name   String
+  age    Int
+  teamId Int
+  teams  teams  @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "players_fk0")
+}
+
+model teams {
+  id                                Int       @id(map: "teams_pk") @default(autoincrement())
+  name                              String
+  city                              String
+  stadium                           String
+  matches_matches_homeTeamIdToteams matches[] @relation("matches_homeTeamIdToteams")
+  matches_matches_awayTeamIdToteams matches[] @relation("matches_awayTeamIdToteams")
+  players                           players[]
+}

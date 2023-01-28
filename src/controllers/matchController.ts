@@ -19,7 +19,7 @@ export async function insertMatch(req:Request, res : Response) {
 export async function getMatches(req:Request, res : Response) {
     try {
         const matches = await getMatchesQuery()
-        return res.send(matches.rows).status(201)
+        return res.send(matches).status(201)
     } catch (error) {
         console.log(error)
         return res.sendStatus(401)
